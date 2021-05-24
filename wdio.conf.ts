@@ -11,9 +11,27 @@ export const config: RemoteOptions = {
       },
     ],
   ],
-  capabilities: {
-    browserName: "chrome",
+  commonCapabilities: {
+    build: "Mobile Device Test Examples",
+    project: "PayPal SDK",
   },
+  capabilities: [
+    {
+      // @ts-expect-error os key is invalid
+      os: "Windows",
+      os_version: "10",
+      browserName: "Chrome",
+      browser_version: "latest",
+    },
+    {
+      // @ts-expect-error browserName key is invalid
+      browserName: "android",
+      os_version: "10.0",
+      device: "Samsung Galaxy S20",
+      real_mobile: "true",
+    },
+  ],
+
   waitforTimeout: 10000,
   logLevel: "silent",
 };
