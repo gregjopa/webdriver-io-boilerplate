@@ -5,7 +5,9 @@
   "scripts": {
     "test": "npm run build && wdio ./wdio.conf.js",
     "build": "tsc -p .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --write --ignore-unknown ."
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -20,6 +22,11 @@
     "@types/chai": "^4.2.18",
     "@types/mocha": "^8.2.2",
     "@types/node": "^14.17.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.0",
@@ -27,6 +34,11 @@
     "typescript": "^4.3.2"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown ."
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --ext .js,.ts"
+    ],
+    "*.{js,jsx,ts,tsx,html,css,json,md,yaml,yml,graphql}": [
+      "prettier --write --ignore-unknown"
+    ]
   }
 }
