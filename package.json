@@ -7,6 +7,10 @@
     "build": "tsc -p .",
     "prepare": "husky install",
     "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --write --ignore-unknown .",
+    "test-stage-bs": "wdio resources/config/wdio.stage.browserstack.conf.ts",
+    "test-stage-onprem": "wdio resources/config/wdio.stage.on-prem.conf.ts",
+    "test-prod-bs": "wdio resources/config/wdio.prod.browserstack.conf.ts"
     "format": "prettier --write --ignore-unknown ."
   },
   "license": "Apache-2.0",
@@ -16,10 +20,12 @@
     "@wdio/mocha-framework": "^7.6.0",
     "browserstack-local": "^1.4.8",
     "chai": "^4.3.4",
+    "minimist": "^1.2.5",
     "webdriverio": "^7.6.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.18",
+    "@types/minimist": "^1.2.1",
     "@types/mocha": "^8.2.2",
     "@types/node": "^14.17.1",
     "@typescript-eslint/eslint-plugin": "^4.26.0",

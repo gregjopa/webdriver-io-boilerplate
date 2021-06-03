@@ -2,9 +2,7 @@ import { expect } from "chai";
 
 describe("Testing Paypal buttons", () => {
   beforeEach(async () => {
-    await browser.url(
-      "https://developer.paypal.com/demo/checkout/#/pattern/client"
-    );
+    await browser.url("");
   });
 
   it("should start payment flow when clicking on paypal button", async () => {
@@ -23,7 +21,7 @@ describe("Testing Paypal buttons", () => {
     await paypalButton.click();
     await browser.switchToParentFrame();
 
-    let windows: string[] = await browser.getWindowHandles();
+    const windows: string[] = await browser.getWindowHandles();
     expect(windows.length).to.equal(2);
 
     await browser.switchToWindow(windows[1]);
