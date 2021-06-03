@@ -5,11 +5,7 @@ import { switchWindow } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", () => {
-<<<<<<< HEAD
-    browser.url("https://developer.paypal.com/demo/checkout/#/pattern/client");
-=======
     browser.url("/demo/checkout/#/pattern/client");
->>>>>>> b0628e439c3d6a03aba11d540eb6ce2b7d13809b
   });
 
   afterEach("clear sessionstorage", () => {
