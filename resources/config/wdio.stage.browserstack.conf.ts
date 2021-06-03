@@ -10,7 +10,7 @@ const overrides = {
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
   specs: ["__tests__/**/*.test.ts"],
   host: "hub.browserstack.com",
-  baseUrl: "https://developer.paypal.com/demo/checkout/#/pattern/client",
+  baseUrl: "https://developer.paypal.com",
   waitforTimeout: 50000,
   maxInstances: 5,
   capabilities: [

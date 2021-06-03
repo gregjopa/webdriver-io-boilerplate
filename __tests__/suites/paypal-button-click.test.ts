@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { switchWindow } from "../util/common";
+import { getWarningText } from "../util/action";
+import { checkoutWithPaypal, loginWithPhoneNumber } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", () => {
@@ -11,28 +12,10 @@ describe("Testing Paypal buttons", () => {
   });
 
   it("should start payment flow when clicking on paypal button", () => {
-    const frame = $("div#paypal-button-container iframe");
-    frame.waitForDisplayed();
-    browser.switchToFrame(frame);
-    const paypalButton = $('[data-funding-source="paypal"]');
-    paypalButton.waitForDisplayed();
-    paypalButton.click();
-    browser.switchToParentFrame();
-
-    switchWindow();
-
-    const phoneTextField = $("#email");
-    phoneTextField.waitForDisplayed();
-    phoneTextField.waitForClickable({ timeout: 5000 });
-    browser.pause(5000);
-    phoneTextField.setValue("1234567890");
-    const nextButton = $("#btnNext");
-    nextButton.waitForClickable({ timeout: 5000 });
-    nextButton.click();
-
-    const notificationWarning = $("#content > div.notifications > p");
-    notificationWarning.waitForDisplayed();
-    const text = notificationWarning.getText();
+    checkoutWithPaypal();
+    browser.switchWindowForCheckout(); //custom command
+    loginWithPhoneNumber("1234567890");
+    const text = getWarningText();
     expect(text).to.be.equals(
       "You haven’t confirmed your mobile yet. Use your email for now."
     );

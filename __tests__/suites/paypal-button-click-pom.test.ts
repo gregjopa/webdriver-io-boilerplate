@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { CheckoutPage } from "../pages/checkoutPage";
 import { HomePage } from "../pages/homePage";
-import { switchWindow } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", () => {
@@ -16,7 +15,7 @@ describe("Testing Paypal buttons", () => {
     const homePage = new HomePage();
     homePage.clickPaypalButton();
 
-    switchWindow();
+    browser.switchWindowForCheckout(); //custom command
 
     const checkoutPage = new CheckoutPage();
     checkoutPage.loginUsingPhoneNumber("1234567890");

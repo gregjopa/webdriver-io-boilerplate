@@ -2,6 +2,8 @@ import { config as defaultConfig } from "./wdio.conf";
 import * as _ from "lodash";
 import * as parseArgs from "minimist";
 
+const epochTime = new Date().getTime();
+
 const overrides = {
   user: process.env.BROWSERSTACK_USERNAME || "BROWSERSTACK_USERNAME",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
@@ -27,7 +29,7 @@ const overrides = {
         "default_name",
       build:
         process.env.BROWSERSTACK_BUILD_NAME ||
-        "webdriver-io-boilerplate" + " - " + new Date().getTime(),
+        "webdriver-io-boilerplate" + " - " + epochTime,
     },
     {
       os: "OS X",
@@ -40,7 +42,7 @@ const overrides = {
         "default_name",
       build:
         process.env.BROWSERSTACK_BUILD_NAME ||
-        "webdriver-io-boilerplate" + " - " + new Date().getTime(),
+        "webdriver-io-boilerplate" + " - " + epochTime,
     },
   ],
   afterTest: function (

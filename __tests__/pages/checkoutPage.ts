@@ -20,6 +20,7 @@ export class CheckoutPage extends Page {
 
   _inputPhoneNumber(phoneNumber: string): void {
     this.loginText.waitForClickable({ timeout: 5000 });
+    browser.pause(5000);
     this.loginText.setValue(phoneNumber);
   }
 
@@ -30,8 +31,7 @@ export class CheckoutPage extends Page {
   }
 
   _clickNextButton(): void {
-    this.nextButton.waitForClickable({ timeout: 5000 });
-    this.nextButton.click();
+    this.nextButton.waitAndClick();
   }
 
   loginUsingPhoneNumber(phoneNumber: string): void {

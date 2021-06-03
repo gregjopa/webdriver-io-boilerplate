@@ -1,3 +1,5 @@
+import { switchWindow, waitAndClick } from "../../__tests__/util/common";
+
 export const config = {
   runner: "local",
   specs: ["__tests__/**/*.test.ts"],
@@ -32,5 +34,9 @@ export const config = {
     if (error) {
       browser.takeScreenshot();
     }
+  },
+  before: function (): void {
+    browser.addCommand("switchWindowForCheckout", switchWindow);
+    browser.addCommand("waitAndClick", waitAndClick, true);
   },
 };

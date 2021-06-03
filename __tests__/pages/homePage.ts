@@ -25,8 +25,7 @@ export class HomePage extends Page {
 
   _clickPaypalButton(): void {
     this.paypalButton.waitForDisplayed();
-    this.paypalButton.waitForClickable({ timeout: 5000 });
-    this.paypalButton.click();
+    this.paypalButton.waitAndClick();
   }
 
   clickPaypalButton(): void {
