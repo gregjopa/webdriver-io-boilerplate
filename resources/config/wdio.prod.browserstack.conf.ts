@@ -5,7 +5,7 @@ import * as parseArgs from "minimist";
 const overrides = {
   user: process.env.BROWSERSTACK_USERNAME || "BROWSERSTACK_USERNAME",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
-  specs: ["__tests__/*.test.ts"],
+  specs: ["__tests__/**/*.test.ts"],
   host: "hub.browserstack.com",
   maxInstances: 5,
   capabilities: [
@@ -25,7 +25,7 @@ const overrides = {
         "default_name",
       build:
         process.env.BROWSERSTACK_BUILD_NAME ||
-        "browserstack-examples-webdriverio" + " - " + new Date().getTime(),
+        "webdriver-io-boilerplate" + " - " + new Date().getTime(),
     },
   ],
   afterTest: function (

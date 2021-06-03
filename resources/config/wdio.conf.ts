@@ -1,6 +1,6 @@
 export const config = {
   runner: "local",
-  specs: ["__tests__/*.test.ts"],
+  specs: ["__tests__/**/*.test.ts"],
   capabilities: [
     {
       maxInstances: 1,
@@ -11,7 +11,7 @@ export const config = {
   logLevel: "warn",
   coloredLogs: true,
   bail: 0,
-  baseUrl: "https://developer.paypal.com/demo/checkout/#/pattern/client",
+  baseUrl: "https://developer.paypal.com",
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
   connectionRetryCount: 3,
