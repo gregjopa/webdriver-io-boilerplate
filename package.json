@@ -8,9 +8,9 @@
     "prepare": "husky install",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --write --ignore-unknown .",
-    "test-stage-bs": "wdio resources/config/wdio.stage.browserstack.conf.ts",
+    "test-stage-bstack": "wdio resources/config/wdio.stage.browserstack.conf.ts",
     "test-stage-onprem": "wdio resources/config/wdio.stage.on-prem.conf.ts",
-    "test-prod-bs": "wdio resources/config/wdio.prod.browserstack.conf.ts"
+    "test-prod-bstack": "wdio resources/config/wdio.prod.browserstack.conf.ts"
   },
   "license": "Apache-2.0",
   "dependencies": {

@@ -12,9 +12,8 @@ export const config = {
   coloredLogs: true,
   bail: 0,
   baseUrl: "https://developer.paypal.com",
-  waitforTimeout: 10000,
+  waitforTimeout: 60000,
   connectionRetryTimeout: 120000,
-  connectionRetryCount: 3,
   chromeOptions: {
     prefs: {
       "profile.default_content_setting_values.geolocation": 1,

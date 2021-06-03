@@ -23,6 +23,8 @@ describe("Testing Paypal buttons", () => {
 
     const phoneTextField = $("#email");
     phoneTextField.waitForDisplayed();
+    phoneTextField.waitForClickable({ timeout: 5000 });
+    browser.pause(5000);
     phoneTextField.setValue("1234567890");
     const nextButton = $("#btnNext");
     nextButton.waitForClickable({ timeout: 5000 });
