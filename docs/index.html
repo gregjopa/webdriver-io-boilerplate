@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>PayPal JS SDK Test Page</title>
+    </head>
+    <body>
+        <h1>PayPal JS SDK Test Page</h1>
+
+        <script src="https://unpkg.com/@paypal/paypal-js/dist/paypal.legacy.browser.min.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=URLSearchParams%2CArray.from"></script>
+        <script>
+
+            // default JS SDK params
+            var options = {
+                "client-id": "test",
+                sdkBaseURL: "https://www.paypal.com/sdk/js"
+            };
+
+            // pass any query string params through as options
+            var searchParams = new URLSearchParams(window.location.search);
+
+            Array.from(searchParams).forEach(function (keyAndValue) {
+                options[keyAndValue[0]] = keyAndValue[1];
+            });
+
+            window.paypalLoadScript(options).then(function (paypal) {
+                paypal.Buttons().render("body");
+            });
+        </script>
+    </body>
+</html>
