@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "build/",
+    "outDir": "./.tsbuild/",
     "sourceMap": false,
-    "target": "es2020",
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "CommonJS",
     "removeComments": true,
     "noImplicitAny": true,
     "alwaysStrict": true,
     "strictPropertyInitialization": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "types": ["webdriverio/sync", "chai", "mocha"]
+    "types": ["node", "webdriverio/async", "mocha", "chai"]
   }
 }

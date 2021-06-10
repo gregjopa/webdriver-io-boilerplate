@@ -6,35 +6,37 @@ export class HomePage extends Page {
   /**
    * define selectors using getter methods
    */
-  get paypalFrame(): WebdriverIO.Element {
+  get paypalFrame(): Promise<WebdriverIO.Element> {
     return $("div#paypal-button-container iframe");
   }
 
-  get paypalButton(): WebdriverIO.Element {
+  get paypalButton(): Promise<WebdriverIO.Element> {
     return $('[data-funding-source="paypal"]');
   }
 
-  _switchToPaypalFrame(): void {
-    this.paypalFrame.waitForDisplayed();
-    browser.switchToFrame(this.paypalFrame);
+  async _switchToPaypalFrame(): Promise<void> {
+    const paypalFrame = await this.paypalFrame;
+    await paypalFrame.waitForDisplayed();
+    await browser.switchToFrame(paypalFrame);
   }
 
-  _switchToParentFrame(): void {
-    browser.switchToParentFrame();
+  async _switchToParentFrame(): Promise<void> {
+    await browser.switchToParentFrame();
   }
 
-  _clickPaypalButton(): void {
-    this.paypalButton.waitForDisplayed();
-    this.paypalButton.waitAndClick();
+  async _clickPaypalButton(): Promise<void> {
+    const paypalButton = await this.paypalButton;
+    await paypalButton.waitForDisplayed();
+    await paypalButton.waitAndClick();
   }
 
-  clickPaypalButton(): void {
-    this._switchToPaypalFrame();
-    this._clickPaypalButton();
-    this._switchToParentFrame();
+  async clickPaypalButton(): Promise<void> {
+    await this._switchToPaypalFrame();
+    await this._clickPaypalButton();
+    await this._switchToParentFrame();
   }
 
-  open(): string {
-    return super.open("");
+  async open(): Promise<void> {
+    return await super.open("");
   }
 }

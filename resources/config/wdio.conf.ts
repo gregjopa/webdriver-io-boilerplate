@@ -1,4 +1,8 @@
 import { switchWindow, waitAndClick } from "../../__tests__/util/common";
+// since wdio-mochawesome-reporter does not have types, we use ts-ignore to ignore type checks on that
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import * as mergeResults from "wdio-mochawesome-reporter/mergeResults";
 
 export const config = {
   runner: "local",
@@ -14,7 +18,7 @@ export const config = {
   coloredLogs: true,
   bail: 0,
   baseUrl: "https://developer.paypal.com",
-  waitforTimeout: 60000,
+  waitforTimeout: 30000,
   connectionRetryTimeout: 120000,
   chromeOptions: {
     prefs: {
@@ -24,13 +28,39 @@ export const config = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: 60000,
+    timeout: 150000,
+  },
+  reporters: [
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
+    [
+      "mochawesome",
+      {
+        outputDir: "./mocha-report",
+        outputFileFormat: function (opts: {
+          cid: unknown;
+          capabilities: unknown;
+        }): string {
+          return `results-${opts.cid}.json`;
+        },
+      },
+    ],
+  ],
+  mochawesomeOpts: {
+    includeScreenshots: true,
+    screenshotUseRelativePath: true,
   },
   afterTest: function (
-    test: any,
-    context: any,
-    { error, result, duration, passed, retries }: any
-  ) {
+    _test: Record<string, unknown>,
+    _context: Record<string, unknown>,
+    { error }: Record<string, unknown>
+  ): void {
     if (error) {
       browser.takeScreenshot();
     }
@@ -38,5 +68,8 @@ export const config = {
   before: function (): void {
     browser.addCommand("switchWindowForCheckout", switchWindow);
     browser.addCommand("waitAndClick", waitAndClick, true);
+  },
+  onComplete: function (): void {
+    mergeResults("./mocha-report", "results-*");
   },
 };

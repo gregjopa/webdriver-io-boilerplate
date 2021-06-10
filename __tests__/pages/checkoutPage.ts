@@ -6,40 +6,42 @@ export class CheckoutPage extends Page {
   /**
    * define selectors using getter methods
    */
-  get loginText(): WebdriverIO.Element {
+  get loginText(): Promise<WebdriverIO.Element> {
     return $("#email");
   }
 
-  get nextButton(): WebdriverIO.Element {
+  get nextButton(): Promise<WebdriverIO.Element> {
     return $("#btnNext");
   }
 
-  get notificationWarning(): WebdriverIO.Element {
+  get notificationWarning(): Promise<WebdriverIO.Element> {
     return $("#content > div.notifications > p");
   }
 
-  _inputPhoneNumber(phoneNumber: string): void {
-    this.loginText.waitForClickable({ timeout: 5000 });
-    browser.pause(5000);
-    this.loginText.setValue(phoneNumber);
+  async _inputPhoneNumber(phoneNumber: string): Promise<void> {
+    const email = await this.loginText;
+    await email.waitForClickable();
+    await email.setValue(phoneNumber);
   }
 
-  isNotification(notificationText: string): boolean {
-    this.notificationWarning.waitForDisplayed();
-    const text = this.notificationWarning.getText();
+  async isNotification(notificationText: string): Promise<boolean> {
+    const notificationWarningLabel = await this.notificationWarning;
+    await notificationWarningLabel.waitForDisplayed();
+    const text = await notificationWarningLabel.getText();
     return text === notificationText;
   }
 
-  _clickNextButton(): void {
-    this.nextButton.waitAndClick();
+  async _clickNextButton(): Promise<void> {
+    const nextButton = await this.nextButton;
+    await nextButton.waitAndClick();
   }
 
-  loginUsingPhoneNumber(phoneNumber: string): void {
-    this._inputPhoneNumber(phoneNumber);
-    this._clickNextButton();
+  async loginUsingPhoneNumber(phoneNumber: string): Promise<void> {
+    await this._inputPhoneNumber(phoneNumber);
+    await this._clickNextButton();
   }
 
-  open(): string {
-    return super.open("");
+  async open(): Promise<void> {
+    return await super.open("");
   }
 }

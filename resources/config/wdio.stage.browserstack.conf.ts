@@ -3,36 +3,37 @@ import * as _ from "lodash";
 import { Local } from "browserstack-local";
 import * as parseArgs from "minimist";
 
-const timeStamp = new Date().getTime();
+const epochTime = new Date().getTime();
 const bs_local = new Local();
+const testName =
+  parseArgs(process.argv.slice(2))["bstack-session-name"] || "default_name";
 const overrides = {
   user: process.env.BROWSERSTACK_USERNAME || "BROWSERSTACK_USERNAME",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
   specs: ["__tests__/**/*.test.ts"],
   host: "hub.browserstack.com",
-  baseUrl: "https://developer.paypal.com",
+  baseUrl: "https://<internal>.developer.paypal.com",
   waitforTimeout: 50000,
   maxInstances: 5,
+  commonCapabilities: {
+    "browserstack.maskCommands": "setValues, getValues, setCookies, getCookies",
+    "browserstack.debug": true,
+    "browserstack.video": true,
+    "browserstack.networkLogs": false,
+    "browserstack.local": true,
+    "browserstack.localIdentifier": epochTime,
+    acceptInsecureCerts: true,
+    name: testName,
+    build:
+      process.env.BROWSERSTACK_BUILD_NAME ||
+      "webdriver-io-boilerplate" + " - " + epochTime,
+  },
   capabilities: [
     {
-      "browserstack.maskCommands":
-        "setValues, getValues, setCookies, getCookies",
-      "browserstack.debug": true,
-      "browserstack.video": true,
-      "browserstack.local": true,
-      "browserstack.networkLogs": true,
-      "browserstack.localIdentifier": timeStamp,
       os: "OS X",
       os_version: "Catalina",
       browserName: "Chrome",
       browser_version: "latest",
-      acceptInsecureCerts: true,
-      name:
-        parseArgs(process.argv.slice(2))["bstack-session-name"] ||
-        "default_name",
-      build:
-        process.env.BROWSERSTACK_BUILD_NAME ||
-        "webdriver-io-boilerplate" + " - " + new Date().getTime(),
     },
   ],
   onPrepare: function () {
@@ -41,9 +42,9 @@ const overrides = {
       bs_local.start(
         {
           key: config.key,
-          localIdentifier: `${timeStamp}`,
+          localIdentifier: `${epochTime}`,
           //   forceLocal: true,
-          logFile: `./local-${timeStamp}.log`,
+          logFile: `./local-${epochTime}.log`,
         },
         function (error: unknown) {
           if (error) return reject(error);
@@ -61,7 +62,7 @@ const overrides = {
       });
     });
   },
-  afterTest: function (
+  afterTest: async function (
     _test: Record<string, unknown>,
     _context: Record<string, unknown>,
     { passed, error }: Record<string, unknown>
@@ -72,12 +73,6 @@ const overrides = {
           parseArgs(process.argv.slice(2))["bstack-session-name"] +
           '" }}'
       );
-    } else {
-      browser.executeScript(
-        'browserstack_executor: {"action": "setSessionName", "arguments": {"name":"' +
-          _test.title +
-          '" }}'
-      );
     }
 
     if (passed) {
@@ -86,13 +81,23 @@ const overrides = {
       );
     } else {
       browser.takeScreenshot();
-      browser.executeScript(
-        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed. ' +
-          error +
+      const reason =
+        "At least 1 assertion failed: " +
+        (error as string).toString().replace(/['"]+/g, "");
+      await browser.executeScript(
+        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "' +
+          reason +
           '"}}'
       );
     }
   },
 };
 
-export const config = _.defaultsDeep(overrides, defaultConfig);
+const tmpConfig = _.defaultsDeep(overrides, defaultConfig);
+
+tmpConfig.capabilities.forEach(function (caps: { [x: string]: unknown }) {
+  for (const i in tmpConfig.commonCapabilities)
+    caps[i] = caps[i] || tmpConfig.commonCapabilities[i];
+});
+
+export const config = tmpConfig;

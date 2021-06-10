@@ -1,30 +1,29 @@
-export function switchToPaypalFrame(): void {
-  const frame = $("div#paypal-button-container iframe");
-  frame.waitForDisplayed();
-  browser.switchToFrame(frame);
+export async function switchToPaypalFrame(): Promise<void> {
+  const frame = await $("div#paypal-button-container iframe");
+  await frame.waitForDisplayed();
+  await browser.switchToFrame(frame);
 }
 
-export function clickPaypalButton(): void {
-  const paypalButton = $('[data-funding-source="paypal"]');
-  paypalButton.waitAndClick();
+export async function clickPaypalButton(): Promise<void> {
+  const paypalButton = await $('[data-funding-source="paypal"]');
+  await paypalButton.waitAndClick();
 }
 
-export function enterPhoneNumber(phoneNumber: string): void {
-  const phoneTextField = $("#email");
-  phoneTextField.waitForDisplayed();
-  phoneTextField.waitForClickable({ timeout: 5000 });
-  browser.pause(5000);
-  phoneTextField.setValue(phoneNumber);
+export async function enterPhoneNumber(phoneNumber: string): Promise<void> {
+  const phoneTextField = await $("#email");
+  await phoneTextField.waitForDisplayed();
+  await phoneTextField.waitForClickable();
+  await phoneTextField.setValue(phoneNumber);
 }
 
-export function clickNextButton(): void {
-  const nextButton = $("#btnNext");
-  nextButton.waitAndClick();
+export async function clickNextButton(): Promise<void> {
+  const nextButton = await $("#btnNext");
+  await nextButton.waitAndClick();
 }
 
-export function getWarningText(): string {
-  const notificationWarning = $("#content > div.notifications > p");
-  notificationWarning.waitForDisplayed();
-  const text = notificationWarning.getText();
+export async function getWarningText(): Promise<string> {
+  const notificationWarning = await $("#content > div.notifications > p");
+  await notificationWarning.waitForDisplayed();
+  const text = await notificationWarning.getText();
   return text;
 }
