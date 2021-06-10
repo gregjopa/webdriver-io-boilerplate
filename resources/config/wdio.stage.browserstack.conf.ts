@@ -25,7 +25,7 @@ const overrides = {
     acceptInsecureCerts: true,
     name: testName,
     build:
-      process.env.BROWSERSTACK_BUILD_NAME ||
+      process.env.BROWSERSTACK_BUILD_NAME?.substring(0, 255) ||
       "webdriver-io-boilerplate" + " - " + epochTime,
   },
   capabilities: [
