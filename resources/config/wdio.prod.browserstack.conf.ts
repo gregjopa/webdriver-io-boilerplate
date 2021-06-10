@@ -87,9 +87,10 @@ const overrides = {
       );
     } else {
       await browser.takeScreenshot();
-      const reason =
+      const reason = (
         "At least 1 assertion failed: " +
-        (error as string).toString().replace(/['"]+/g, "");
+        (error as string).toString().replace(/[^a-zA-Z0-9]/g, " ")
+      ).substring(0, 255);
       await browser.executeScript(
         'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "' +
           reason +
