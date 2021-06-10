@@ -6,6 +6,7 @@ describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", async () => {
     await browser.url("/demo/checkout/#/pattern/client");
   });
+  console.log("Hello test");
 
   it("should start payment flow when clicking on paypal button", async () => {
     const homePage = new HomePage();
