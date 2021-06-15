@@ -32,14 +32,6 @@ export const config = {
   },
   reporters: [
     [
-      "allure",
-      {
-        outputDir: "allure-results",
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: false,
-      },
-    ],
-    [
       "mochawesome",
       {
         outputDir: "./mocha-report",

@@ -26,8 +26,8 @@ const overrides = {
   },
   capabilities: [
     {
-      os: "OS X",
-      os_version: "Catalina",
+      os: "Windows",
+      os_version: "10",
       browserName: "Chrome",
       browser_version: "latest",
     },
@@ -39,7 +39,7 @@ const overrides = {
     },
     {
       os: "OS X",
-      os_version: "Catalina",
+      os_version: "Big Sur",
       browserName: "Firefox",
       browser_version: "latest",
     },
