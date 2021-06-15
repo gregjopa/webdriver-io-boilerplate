@@ -2,3 +2,10 @@ node_modules
 .DS_Store
 .vscode
 lib
+build/
+local-*.log
+.tsbuild
+mocha-report/
+mochawesome-report/
+allure-report/
+allure-results/
