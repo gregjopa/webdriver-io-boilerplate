@@ -7,7 +7,7 @@ on:
     types: [opened, labeled, unlabeled, synchronize]
 
 jobs:
-  build:
+  test:
     runs-on: macos-latest
 
     strategy:
@@ -29,6 +29,7 @@ jobs:
           build-name: BUILD_INFO
           project-name: "REPO_NAME"
       - name: Run test
+        id: test
         continue-on-error: true
         run: npm run test-prod-bstack
       - run: npm run generateMochawesome
@@ -37,3 +38,6 @@ jobs:
         with:
           name: mochawesome-report
           path: mochawesome-report/
+      - name: Check if tests have failed
+        if: steps.test.outcome == 'failure'
+        run: exit 1
