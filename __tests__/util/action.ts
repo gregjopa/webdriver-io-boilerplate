@@ -1,5 +1,5 @@
 export async function switchToPaypalFrame(): Promise<void> {
-  const frame = await $("div#paypal-button-container iframe");
+  const frame = await $("div#paypal-button-container iframe[title='PayPal']");
   await frame.waitForDisplayed();
   await browser.switchToFrame(frame);
 }

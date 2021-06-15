@@ -12,9 +12,8 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "prettier", "custom-rules"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
-    "prettier/prettier": ["error"],
-    "custom-rules/browser-url-only-once": ["error"]
+    "prettier/prettier": ["error"]
   }
 }
